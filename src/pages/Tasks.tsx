@@ -1,6 +1,7 @@
 import { Button } from "@/components/Button"
 import { Card } from "@/components/Card"
 import { Input } from "@/components/Input"
+import { PageTitle } from "@/components/PageTitle"
 import { Pagination } from "@/components/Pagination"
 import { Select } from "@/components/Select"
 import { GoPlus } from "react-icons/go"
@@ -8,10 +9,9 @@ import { IoIosSearch } from "react-icons/io"
 
 export function Tasks() {
   return (
-    <main className="max-w-7xl w-full mx-auto px-4 py-6 lg:py-8">
+    <>
       <div className="grid grid-cols-2 grid-rows-2 items-center gap-4 lg:flex lg:justify-between">
-        <h1 className="text-2xl font-semibold text-nowrap">Todas tarefas</h1>
-
+        <PageTitle title="Todas tarefas" />
         <Input
           placeholder="Pesquise uma tarefa"
           className="lg:max-w-180 w-full col-span-2"
@@ -64,6 +64,6 @@ export function Tasks() {
           ))}
       </div>
       <Pagination />
-    </main>
+    </>
   )
 }

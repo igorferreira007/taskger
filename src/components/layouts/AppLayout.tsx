@@ -5,7 +5,9 @@ export function AppLayout() {
   return (
     <div>
       <Header />
-      <Outlet />
+      <main className="max-w-7xl w-full mx-auto px-4 py-6 lg:py-8">
+        <Outlet />
+      </main>
     </div>
   )
 }

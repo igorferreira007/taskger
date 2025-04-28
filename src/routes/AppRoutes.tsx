@@ -1,4 +1,5 @@
 import { AppLayout } from "@/components/layouts/AppLayout"
+import { NewTask } from "@/pages/NewTask"
 import { Tasks } from "@/pages/Tasks"
 import { Teams } from "@/pages/Teams"
 import { Route, Routes } from "react-router"
@@ -8,6 +9,7 @@ export function AppRoutes() {
     <Routes>
       <Route path="/" element={<AppLayout />}>
         <Route path="/" element={<Tasks />} />
+        <Route path="/new-task" element={<NewTask />} />
         <Route path="/teams" element={<Teams />} />
       </Route>
     </Routes>

@@ -17,17 +17,17 @@ export function Select({
   label,
   selectSize = "big",
   className,
+  ...rest
 }: Props) {
   return (
     <div className={twMerge("flex flex-col gap-2", className)}>
-      {label && <label>{label}</label>}
+      {label && <label htmlFor={rest.id}>{label}</label>}
       <select
-        name="status"
-        id="status"
         className={twMerge(
           "bg-background-tertiary min-w-max w-full",
           variants.size[selectSize]
         )}
+        {...rest}
       >
         {children}
       </select>
