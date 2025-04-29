@@ -11,7 +11,7 @@ export function Tasks() {
   return (
     <>
       <div className="grid grid-cols-2 grid-rows-2 items-center gap-4 lg:flex lg:justify-between">
-        <PageTitle title="Todas tarefas" />
+        <PageTitle title="Todas tarefas" className="text-nowrap" />
         <Input
           placeholder="Pesquise uma tarefa"
           className="lg:max-w-180 w-full col-span-2"

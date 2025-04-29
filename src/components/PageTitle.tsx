@@ -1,7 +1,11 @@
-type Props = {
+import { twMerge } from "tailwind-merge"
+
+type Props = React.ComponentProps<"h1"> & {
   title: string
 }
 
-export function PageTitle({ title }: Props) {
-  return <h1 className="text-2xl font-semibold text-nowrap">{title}</h1>
+export function PageTitle({ title, className }: Props) {
+  return (
+    <h1 className={twMerge("text-2xl font-semibold", className)}>{title}</h1>
+  )
 }

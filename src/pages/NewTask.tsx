@@ -7,7 +7,7 @@ import { TextArea } from "@/components/TextArea"
 
 export function NewTask() {
   return (
-    <div>
+    <>
       <ButtonText />
       <form
         className="flex flex-col gap-6 lg:gap-8 mt-4 lg:mt-8"
@@ -44,6 +44,6 @@ export function NewTask() {
           Salvar
         </Button>
       </form>
-    </div>
+    </>
   )
 }

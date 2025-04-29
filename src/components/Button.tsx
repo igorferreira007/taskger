@@ -28,7 +28,7 @@ export function Button({
   return (
     <button
       className={twMerge(
-        "h-12 rounded-lg text-text-primary font-medium hover:brightness-90 transition flex items-center justify-center gap-2 text-nowrap",
+        "h-12 rounded-lg text-text-primary font-medium hover:brightness-90 transition flex items-center justify-center gap-2 text-nowrap text-sm",
         variants.color[color],
         variants.size[size],
         className

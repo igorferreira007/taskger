@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge"
 type Props = React.ComponentProps<"select"> & {
   label?: string
   selectSize?: "big" | "small"
+  color?: "transparent" | "default"
 }
 
 const variants = {
@@ -10,12 +11,17 @@ const variants = {
     big: "h-12 px-3.5 rounded-lg",
     small: "px-2 py-1 rounded-sm",
   },
+  color: {
+    transparent: "bg-background-primary",
+    default: "bg-background-tertiary",
+  },
 }
 
 export function Select({
   children,
   label,
   selectSize = "big",
+  color = "default",
   className,
   ...rest
 }: Props) {
@@ -24,8 +30,9 @@ export function Select({
       {label && <label htmlFor={rest.id}>{label}</label>}
       <select
         className={twMerge(
-          "bg-background-tertiary min-w-max w-full",
-          variants.size[selectSize]
+          "min-w-max w-full",
+          variants.size[selectSize],
+          variants.color[color]
         )}
         {...rest}
       >
