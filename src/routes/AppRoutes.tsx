@@ -1,4 +1,5 @@
 import { AppLayout } from "@/components/layouts/AppLayout"
+import { EditTask } from "@/pages/EditTask"
 import { NewTask } from "@/pages/NewTask"
 import { TaskDetails } from "@/pages/TaskDetails"
 import { Tasks } from "@/pages/Tasks"
@@ -12,6 +13,7 @@ export function AppRoutes() {
         <Route path="/" element={<Tasks />} />
         <Route path="/new-task" element={<NewTask />} />
         <Route path="/task-details" element={<TaskDetails />} />
+        <Route path="/edit-task" element={<EditTask />} />
         <Route path="/teams" element={<Teams />} />
       </Route>
     </Routes>
