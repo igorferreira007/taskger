@@ -28,7 +28,13 @@ export function Teams() {
         {Array(4)
           .fill(null)
           .map((_, index) => (
-            <TeamCard key={index} />
+            <TeamCard
+              teamName="Equipe de Desenvolvimento e suporte"
+              description="Team description, lorem is simply dummy text of the printing and typesetting industry. Lorem Ipsum"
+              numberOfMembers={5}
+              numberOfTasks={10}
+              key={index}
+            />
           ))}
       </div>
     </>
