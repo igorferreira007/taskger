@@ -7,6 +7,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "./ui/sheet"
+import { Profile } from "./Profile"
 
 export function Menu() {
   return (
@@ -40,19 +41,8 @@ export function Menu() {
         </a>
       </nav>
 
-      <SheetFooter>
-        <div className="flex gap-2 ml-auto">
-          <div className="flex flex-col items-end justify-center">
-            <a href="" className="font-semibold">
-              Igor Ferreira
-            </a>
-            <button className="text-sm text-text-tertiary">Sair</button>
-          </div>
-          <img
-            src="https://github.com/igorferreira007.png"
-            className="w-16 h-16 object-cover rounded-full border border-background-tertiary"
-          />
-        </div>
+      <SheetFooter className="pt-0">
+        <Profile className="ml-auto" />
       </SheetFooter>
     </SheetContent>
   )
