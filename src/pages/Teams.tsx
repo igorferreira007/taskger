@@ -25,17 +25,30 @@ export function Teams() {
         </Button>
       </div>
       <div className="mt-4 lg:mt-8 grid grid-cols-[repeat(auto-fit,minmax(18rem,1fr))] gap-4">
-        {Array(4)
-          .fill(null)
-          .map((_, index) => (
-            <TeamCard
-              teamName="Equipe de Desenvolvimento e suporte"
-              description="Team description, lorem is simply dummy text of the printing and typesetting industry. Lorem Ipsum"
-              numberOfMembers={5}
-              numberOfTasks={10}
-              key={index}
-            />
-          ))}
+        <TeamCard
+          teamName="Equipe de Desenvolvimento e suporte"
+          description="Team description, lorem is simply dummy text of the printing and typesetting industry. Lorem Ipsum"
+          numberOfMembers={5}
+          numberOfTasks={10}
+        />
+        <TeamCard
+          teamName="Equipe 2 Infraestrutura / Tech"
+          description="Team description, lorem is simply dummy text of the printing and typesetting industry. Lorem Ipsu"
+          numberOfMembers={3}
+          numberOfTasks={20}
+        />
+        <TeamCard
+          teamName="Equipe de Desenvolvimento e suporte"
+          description="Team description, lorem is simply dummy text of the printing and typesetting industry. Lorem Ipsum"
+          numberOfMembers={5}
+          numberOfTasks={10}
+        />
+        <TeamCard
+          teamName="Equipe 2 Infraestrutura / Tech"
+          description="Team description, lorem is simply dummy text of the printing and typesetting industry. Lorem Ipsu"
+          numberOfMembers={3}
+          numberOfTasks={20}
+        />
       </div>
     </>
   )

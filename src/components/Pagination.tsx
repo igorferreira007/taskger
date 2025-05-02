@@ -24,7 +24,7 @@ export function Pagination() {
     <div className="flex items-center gap-2 w-40 mx-auto mt-4">
       <button
         className={twMerge(
-          "bg-background-tertiary w-8 h-8 rounded-lg grid place-content-center text-2xl disabled:cursor-not-allowed!",
+          "bg-background-tertiary w-8 h-8 rounded-lg grid place-content-center text-2xl disabled:cursor-not-allowed! not-disabled:hover:brightness-110 transition",
           `${page === 1 && "bg-background-tertiary/25"}`
         )}
         onClick={() => handlePagination("previous")}
@@ -37,7 +37,7 @@ export function Pagination() {
       </span>
       <button
         className={twMerge(
-          "bg-background-tertiary w-8 h-8 rounded-lg grid place-content-center text-2xl disabled:cursor-not-allowed!",
+          "bg-background-tertiary w-8 h-8 rounded-lg grid place-content-center text-2xl disabled:cursor-not-allowed! not-disabled:hover:brightness-110 transition",
           `${page === totalPage && "bg-background-tertiary/25"}`
         )}
         onClick={() => handlePagination("next")}
