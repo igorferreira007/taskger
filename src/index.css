@@ -29,6 +29,27 @@
   --color-status-pending: #e1e1e1;
   --color-status-progress: #64c1ff;
   --color-status-completed: #28a745;
+
+  --animate-accordion-open: slideDown 1s linear;
+  --animate-accordion-closed: slideUp 1s linear;
+
+  @keyframes slideDown {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
 }
 
 @layer base {

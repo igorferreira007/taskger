@@ -7,6 +7,8 @@ import { Select } from "@/components/Select"
 import { GoPlus } from "react-icons/go"
 import { IoIosSearch } from "react-icons/io"
 
+import profilePicture from "@/assets/Igor.png"
+
 export function Tasks() {
   return (
     <>
@@ -59,7 +61,7 @@ export function Tasks() {
               responsible="Arthur Silva Ferreira de Macedo Oliveiraaaaaaaaaaa"
               team="Equipe 1 texto apenas para exceder o numero de linhas"
               priority="low"
-              avatar="https://github.com/igorferreira007.png"
+              avatar={profilePicture}
             />
           ))}
       </div>

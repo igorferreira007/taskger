@@ -1,6 +1,6 @@
 import * as Dialog from "@radix-ui/react-dialog"
 import * as Accordion from "@radix-ui/react-accordion"
-import { GoX } from "react-icons/go"
+import { GoChevronDown, GoX } from "react-icons/go"
 
 export function TeamModal() {
   return (
@@ -40,8 +40,12 @@ export function TeamModal() {
               value="item-1"
             >
               <Accordion.AccordionTrigger asChild>
-                <button className="font-semibold w-full text-start p-4 pt-4 shadow-none! data-[state=open]:border-b border-background-tertiary">
+                <button className="font-semibold w-full text-start p-4 pt-4 shadow-none! data-[state=open]:border-b border-background-tertiary flex items-center justify-between group">
                   Membros
+                  <GoChevronDown
+                    size={24}
+                    className="group-data-[state=open]:rotate-180 transition-transform duration-200"
+                  />
                 </button>
               </Accordion.AccordionTrigger>
               <Accordion.AccordionContent className="p-4">
@@ -59,8 +63,12 @@ export function TeamModal() {
               value="item-2"
             >
               <Accordion.AccordionTrigger asChild>
-                <button className="font-semibold w-full text-start p-4 pt-4 shadow-none! data-[state=open]:border-b border-background-tertiary">
+                <button className="font-semibold w-full text-start p-4 pt-4 shadow-none! data-[state=open]:border-b border-background-tertiary flex items-center justify-between group">
                   Tarefas
+                  <GoChevronDown
+                    size={24}
+                    className="group-data-[state=open]:rotate-180 transition-transform duration-200"
+                  />
                 </button>
               </Accordion.AccordionTrigger>
               <Accordion.AccordionContent className="p-4">
