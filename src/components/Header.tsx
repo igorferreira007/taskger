@@ -10,7 +10,7 @@ const navLinks = [
   { to: "/", label: "Tarefas" },
   { to: "/teams", label: "Equipes" },
   { to: "/members", label: "Membros" },
-  { to: "/logs", label: "Histórico" },
+  { to: "/task-history", label: "Histórico" },
 ]
 
 export function Header() {
