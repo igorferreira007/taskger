@@ -1,5 +1,6 @@
 import { FaUser } from "react-icons/fa"
 import { twMerge } from "tailwind-merge"
+import { TaskStatus } from "./TaskStatus"
 
 type Props = {
   title: string
@@ -62,7 +63,7 @@ export function Card({
       <h3 className="font-semibold grow line-clamp-2" title={title}>
         {title}
       </h3>
-      <div>
+      {/* <div>
         <span
           className={twMerge(
             "inline-block w-3 h-3 rounded-full",
@@ -70,7 +71,8 @@ export function Card({
           )}
         />
         <span className="text-sm ml-2">{variants.status[status].title}</span>
-      </div>
+      </div> */}
+      <TaskStatus status={status} />
       <footer className="flex items-center gap-2 text-sm font-light">
         {avatar ? (
           <img
