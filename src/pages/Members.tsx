@@ -1,6 +1,6 @@
 import { Input } from "@/components/Input"
+import { MemberTableRow } from "@/components/MemberTableRow"
 import { PageTitle } from "@/components/PageTitle"
-import { Select } from "@/components/Select"
 import { IoIosSearch } from "react-icons/io"
 
 export function Members() {
@@ -15,73 +15,39 @@ export function Members() {
         />
       </div>
       <div className="mt-4 lg:mt-8 overflow-x-auto">
-        <table className="w-full min-w-270 border-separate border-spacing-y-2">
+        <table className="text-sm lg:text-base w-full min-w-270 border-separate border-spacing-y-2 text-nowrap">
           <thead className="bg-brand/20">
             <tr>
-              <th className="font-normal text-start first:rounded-l-lg last:rounded-r-lg first:pl-10 last:pr-10 py-3 px-2">
+              <th className="font-normal text-start first:rounded-l-lg last:rounded-r-lg first:pl-6 last:pr-6 py-3 px-2 w-full">
                 Nome
               </th>
-              <th className="font-normal text-start first:rounded-l-lg last:rounded-r-lg first:pl-10 last:pr-10 py-3 px-2">
+              <th className="font-normal text-start first:rounded-l-lg last:rounded-r-lg first:pl-6 last:pr-6 py-3 px-2">
                 Email
               </th>
-              <th className="font-normal text-start first:rounded-l-lg last:rounded-r-lg first:pl-10 last:pr-10 py-3 px-2">
+              <th className="font-normal text-start first:rounded-l-lg last:rounded-r-lg first:pl-6 last:pr-6 py-3 px-2">
                 Cargo
               </th>
-              <th className="font-normal text-start first:rounded-l-lg last:rounded-r-lg first:pl-10 last:pr-10 py-3 px-2">
+              <th className="font-normal text-start first:rounded-l-lg last:rounded-r-lg first:pl-6 last:pr-6 py-3 px-2">
                 Equipe
               </th>
-              <th className="font-normal text-start first:rounded-l-lg last:rounded-r-lg first:pl-10 last:pr-10 py-3 px-2">
+              <th className="font-normal text-start first:rounded-l-lg last:rounded-r-lg first:pl-6 last:pr-6 py-3 px-2 w-34">
                 Data de entrada
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-background-tertiary h-12">
-              <td className="first:rounded-l-lg last:rounded-r-lg first:pl-10 last:pr-10 px-2">
-                Igor Ferreira de Macedoooooooooooooooooooooooooooooo
-              </td>
-              <td className="first:rounded-l-lg last:rounded-r-lg first:pl-10 last:pr-10 px-2">
-                igor@email.com
-              </td>
-              <td className="first:rounded-l-lg last:rounded-r-lg first:pl-10 last:pr-10 px-2">
-                <Select selectSize="xs">
-                  <option value="member">Membro</option>
-                  <option value="admin">Administrador</option>
-                </Select>
-              </td>
-              <td className="first:rounded-l-lg last:rounded-r-lg first:pl-10 last:pr-10 px-2">
-                <Select selectSize="xs">
-                  <option value="member">Administração</option>
-                  <option value="admin">Desenvolvimento</option>
-                </Select>
-              </td>
-              <td className="first:rounded-l-lg last:rounded-r-lg first:pl-10 last:pr-10 px-2">
-                16/02/2025
-              </td>
-            </tr>
-            <tr className="bg-background-tertiary h-12">
-              <td className="first:rounded-l-lg last:rounded-r-lg first:pl-10 last:pr-10 px-2">
-                Igor Ferreira de Macedoooooooooooooooooooooooooooooo
-              </td>
-              <td className="first:rounded-l-lg last:rounded-r-lg first:pl-10 last:pr-10 px-2">
-                igor@email.com
-              </td>
-              <td className="first:rounded-l-lg last:rounded-r-lg first:pl-10 last:pr-10 px-2">
-                <Select selectSize="xs">
-                  <option value="member">Membro</option>
-                  <option value="admin">Administrador</option>
-                </Select>
-              </td>
-              <td className="first:rounded-l-lg last:rounded-r-lg first:pl-10 last:pr-10 px-2">
-                <Select selectSize="xs">
-                  <option value="member">Administração</option>
-                  <option value="admin">Desenvolvimento</option>
-                </Select>
-              </td>
-              <td className="first:rounded-l-lg last:rounded-r-lg first:pl-10 last:pr-10 px-2">
-                16/02/2025
-              </td>
-            </tr>
+            {Array(16)
+              .fill(null)
+              .map((_, index) => (
+                <MemberTableRow
+                  key={index}
+                  name="Igor Ferreira de Macedo Oliveira dos Santos Neto"
+                  email="igorferreira.dev@email.com"
+                  role="member"
+                  team="development"
+                  startDate="16/02/2025"
+                />
+              ))}
           </tbody>
         </table>
       </div>
