@@ -6,6 +6,7 @@ import { NewTeam } from "@/pages/NewTeam"
 import { TaskDetails } from "@/pages/TaskDetails"
 import { Tasks } from "@/pages/Tasks"
 import { Teams } from "@/pages/Teams"
+import { TaskHistory } from "@/pages/TaskHistory"
 import { Route, Routes } from "react-router"
 
 export function AppRoutes() {
@@ -19,6 +20,7 @@ export function AppRoutes() {
         <Route path="/teams" element={<Teams />} />
         <Route path="/new-team" element={<NewTeam />} />
         <Route path="/members" element={<Members />} />
+        <Route path="/task-history" element={<TaskHistory />} />
       </Route>
     </Routes>
   )
