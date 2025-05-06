@@ -2,7 +2,7 @@ import { twMerge } from "tailwind-merge"
 
 type Props = React.ComponentProps<"select"> & {
   label?: string
-  selectSize?: "big" | "small"
+  selectSize?: "big" | "small" | "xs"
   color?: "transparent" | "default"
 }
 
@@ -10,6 +10,7 @@ const variants = {
   size: {
     big: "h-12 px-3.5 rounded-lg",
     small: "px-2 py-1 rounded-sm",
+    xs: "px-0 rounded-sm",
   },
   color: {
     transparent: "bg-background-primary",

@@ -1,6 +1,7 @@
 import * as Dialog from "@radix-ui/react-dialog"
 import * as Accordion from "@radix-ui/react-accordion"
-import { GoChevronDown, GoX } from "react-icons/go"
+import { GoX } from "react-icons/go"
+import { AccordionItem } from "./AccordionItem"
 
 export function TeamModal() {
   return (
@@ -35,53 +36,22 @@ export function TeamModal() {
             type="single"
             collapsible
           >
-            <Accordion.Item
-              className="AccordionItem border-b border-background-tertiary last:border-b-0"
-              value="item-1"
-            >
-              <Accordion.AccordionTrigger asChild>
-                <button className="font-semibold w-full text-start p-4 pt-4 shadow-none! data-[state=open]:border-b border-background-tertiary flex items-center justify-between group">
-                  Membros
-                  <GoChevronDown
-                    size={24}
-                    className="group-data-[state=open]:rotate-180 transition-transform duration-200"
-                  />
-                </button>
-              </Accordion.AccordionTrigger>
-              <Accordion.AccordionContent className="p-4">
-                <ul className="font-light space-y-4">
-                  <li>Igor Ferreira de Macedo</li>
-                  <li>Igor Ferreira de Macedo</li>
-                  <li>Igor Ferreira de Macedo</li>
-                  <li>Igor Ferreira de Macedo</li>
-                  <li>Igor Ferreira de Macedo</li>
-                </ul>
-              </Accordion.AccordionContent>
-            </Accordion.Item>
-            <Accordion.Item
-              className="AccordionItem border-b border-background-tertiary last:border-b-0"
-              value="item-2"
-            >
-              <Accordion.AccordionTrigger asChild>
-                <button className="font-semibold w-full text-start p-4 pt-4 shadow-none! data-[state=open]:border-b border-background-tertiary flex items-center justify-between group">
-                  Tarefas
-                  <GoChevronDown
-                    size={24}
-                    className="group-data-[state=open]:rotate-180 transition-transform duration-200"
-                  />
-                </button>
-              </Accordion.AccordionTrigger>
-              <Accordion.AccordionContent className="p-4">
-                <ul className="font-light space-y-4">
-                  <li>8b5044d53ebf - Formatar computadores</li>
-                  <li>8b5044d53ebf - Instalar o pacote Office</li>
-                  <li>8b5044d53ebf - Liberar licenças</li>
-                  <li>8b5044d53ebf - Formatar computadores</li>
-                  <li>8b5044d53ebf - Instalar o pacote Office</li>
-                  <li>8b5044d53ebf - Liberar licenças</li>
-                </ul>
-              </Accordion.AccordionContent>
-            </Accordion.Item>
+            <AccordionItem accordionTitle="Membros" itemValue="item-1">
+              <li>Igor Ferreira de Macedo</li>
+              <li>Igor Ferreira de Macedo</li>
+              <li>Igor Ferreira de Macedo</li>
+              <li>Igor Ferreira de Macedo</li>
+              <li>Igor Ferreira de Macedo</li>
+            </AccordionItem>
+
+            <AccordionItem accordionTitle="Tarefas" itemValue="item-2">
+              <li>8b5044d53ebf - Formatar computadores</li>
+              <li>8b5044d53ebf - Instalar o pacote Office</li>
+              <li>8b5044d53ebf - Liberar licenças</li>
+              <li>8b5044d53ebf - Formatar computadores</li>
+              <li>8b5044d53ebf - Instalar o pacote Office</li>
+              <li>8b5044d53ebf - Liberar licenças</li>
+            </AccordionItem>
           </Accordion.Root>
         </div>
       </Dialog.Content>
