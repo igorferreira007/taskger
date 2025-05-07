@@ -8,6 +8,7 @@ import { Tasks } from "@/pages/Tasks"
 import { Teams } from "@/pages/Teams"
 import { TaskHistory } from "@/pages/TaskHistory"
 import { Route, Routes } from "react-router"
+import { UserProfile } from "@/pages/UserProfile"
 
 export function AppRoutes() {
   return (
@@ -22,6 +23,7 @@ export function AppRoutes() {
         <Route path="/members" element={<Members />} />
         <Route path="/task-history" element={<TaskHistory />} />
       </Route>
+      <Route path="/profile" element={<UserProfile />} />
     </Routes>
   )
 }
