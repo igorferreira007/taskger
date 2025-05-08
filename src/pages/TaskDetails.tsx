@@ -36,7 +36,7 @@ export function TaskDetails() {
     <>
       <ButtonText />
 
-      <div className="lg:flex items-start justify-between">
+      <div className="lg:flex items-start justify-between mt-4 lg:mt-8">
         <div>
           <PageTitle title="Formatar computadores" />
           <span className="text-sm font-light">Criado em: 16/02/2025</span>
