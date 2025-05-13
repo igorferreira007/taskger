@@ -16,8 +16,8 @@ export function AppRoutes() {
       <Route path="/" element={<AppLayout />}>
         <Route path="/" element={<Tasks />} />
         <Route path="/new-task" element={<NewTask />} />
-        <Route path="/task-details" element={<TaskDetails />} />
-        <Route path="/edit-task" element={<EditTask />} />
+        <Route path="/task-details/:id" element={<TaskDetails />} />
+        <Route path="/edit-task/:id" element={<EditTask />} />
         <Route path="/teams" element={<Teams />} />
         <Route path="/new-team" element={<NewTeam />} />
         <Route path="/members" element={<Members />} />

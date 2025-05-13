@@ -2,7 +2,7 @@ import { FaUser } from "react-icons/fa"
 import { twMerge } from "tailwind-merge"
 import { TaskStatus } from "./TaskStatus"
 
-type Props = {
+type Props = React.ComponentProps<"div"> & {
   title: string
   status: "pending" | "inProgress" | "completed"
   avatar?: string
@@ -49,6 +49,7 @@ export function Card({
   responsible,
   team,
   priority,
+  ...rest
 }: Props) {
   const [firstName, ...surname] = responsible.split(" ")
   const lastName = surname[surname.length - 1]
@@ -59,6 +60,7 @@ export function Card({
         "bg-background-tertiary border-2 rounded-sm w-full h-37 p-4 flex flex-col gap-2 shadow-[0_4px_4px_0] shadow-black/25 cursor-pointer hover:brightness-110 transition",
         variants.priority[priority].color
       )}
+      {...rest}
     >
       <h3 className="font-semibold grow line-clamp-2" title={title}>
         {title}

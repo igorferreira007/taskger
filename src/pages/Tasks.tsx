@@ -8,8 +8,19 @@ import { GoPlus } from "react-icons/go"
 import { IoIosSearch } from "react-icons/io"
 
 import profilePicture from "@/assets/Igor.png"
+import { useNavigate } from "react-router"
 
 export function Tasks() {
+  const navigate = useNavigate()
+
+  function handleButtonOnClick() {
+    navigate("/new-task")
+  }
+
+  function handleCardOnClick(id: string) {
+    navigate(`/task-details/${id}`)
+  }
+
   return (
     <>
       <div className="grid grid-cols-2 grid-rows-2 items-center gap-4 lg:flex lg:justify-between">
@@ -23,6 +34,7 @@ export function Tasks() {
         <Button
           size="small"
           className="[@media(max-width:1023px)]:w-12 [@media(max-width:1023px)]:p-0 ml-auto lg:m-0 col-start-2 col-end-3 row-start-1 row-end-2"
+          onClick={handleButtonOnClick}
         >
           <GoPlus size={24} />
           <span className="hidden lg:block">Nova tarefa</span>
@@ -62,6 +74,9 @@ export function Tasks() {
               team="Equipe 1 texto apenas para exceder o numero de linhas"
               priority="low"
               avatar={profilePicture}
+              onClick={() =>
+                handleCardOnClick("307a9dde-54f6-48b8-a5ee-6243882dd97c")
+              }
             />
           ))}
       </div>

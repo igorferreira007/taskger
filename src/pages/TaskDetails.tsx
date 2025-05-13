@@ -3,6 +3,7 @@ import { ButtonText } from "@/components/ButtonText"
 import { PageTitle } from "@/components/PageTitle"
 import { Select } from "@/components/Select"
 import { useState } from "react"
+import { useNavigate } from "react-router"
 import { twMerge } from "tailwind-merge"
 
 const variants = {
@@ -23,6 +24,8 @@ const variants = {
 }
 
 export function TaskDetails() {
+  const navigate = useNavigate()
+
   const [status, setStatus] = useState<"pending" | "inProgress" | "completed">(
     "pending"
   )
@@ -30,6 +33,10 @@ export function TaskDetails() {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value as "pending" | "inProgress" | "completed"
     setStatus(value)
+  }
+
+  function handleEditButtonClick(id: string) {
+    navigate(`/edit-task/${id}`)
   }
 
   return (
@@ -103,7 +110,14 @@ export function TaskDetails() {
         <Button color="secondary" size="medium">
           Excluir tarefa
         </Button>
-        <Button size="medium">Editar</Button>
+        <Button
+          size="medium"
+          onClick={() =>
+            handleEditButtonClick("307a9dde-54f6-48b8-a5ee-6243882dd97c")
+          }
+        >
+          Editar
+        </Button>
       </div>
     </>
   )
