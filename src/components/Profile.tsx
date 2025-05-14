@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge"
 type Props = React.ComponentProps<"div">
 
 export function Profile({ className }: Props) {
-  const { remove } = useAuth()
+  const { remove, session } = useAuth()
 
   return (
     <div className={twMerge("flex gap-2", className)}>
@@ -16,7 +16,7 @@ export function Profile({ className }: Props) {
           className="font-semibold"
           title="Ir para a página de perfil"
         >
-          Igor Ferreira
+          {session?.user.name}
         </Link>
         <button
           title="Sair do Taskger"

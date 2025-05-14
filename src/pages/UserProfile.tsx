@@ -6,8 +6,11 @@ import { PiUser } from "react-icons/pi"
 import { PiEnvelope } from "react-icons/pi"
 import { PiPassword } from "react-icons/pi"
 import { Button } from "@/components/Button"
+import { useAuth } from "@/hooks/useAuth"
 
 export function UserProfile() {
+  const { session } = useAuth()
+
   return (
     <div className="pb-16">
       <header className="bg-brand/20">
@@ -24,12 +27,12 @@ export function UserProfile() {
           <Input
             icon={PiUser}
             placeholder="Seu nome"
-            defaultValue="Igor Ferreira"
+            defaultValue={session?.user.name}
           />
           <Input
             icon={PiEnvelope}
             placeholder="Seu nome"
-            defaultValue="igor@email.com"
+            defaultValue={session?.user.email}
             type="email"
           />
           <Input
