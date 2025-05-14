@@ -1,10 +1,13 @@
 import profilePicture from "@/assets/Igor.png"
+import { useAuth } from "@/hooks/useAuth"
 import { Link } from "react-router"
 import { twMerge } from "tailwind-merge"
 
 type Props = React.ComponentProps<"div">
 
 export function Profile({ className }: Props) {
+  const { remove } = useAuth()
+
   return (
     <div className={twMerge("flex gap-2", className)}>
       <div className="flex flex-col items-end justify-center">
@@ -15,7 +18,13 @@ export function Profile({ className }: Props) {
         >
           Igor Ferreira
         </Link>
-        <button className="text-sm text-text-tertiary">Sair</button>
+        <button
+          title="Sair do Taskger"
+          className="text-sm text-text-tertiary"
+          onClick={() => remove()}
+        >
+          Sair
+        </button>
       </div>
       <Link to="/profile" title="Ir para a página de perfil">
         <img
