@@ -2,16 +2,61 @@ import { Button } from "@/components/Button"
 import { Input } from "@/components/Input"
 import { PageTitle } from "@/components/PageTitle"
 import { TeamCard } from "@/components/TeamCard"
+import { api } from "@/services/api"
+import { useEffect, useState } from "react"
 import { GoPlus } from "react-icons/go"
 import { IoIosSearch } from "react-icons/io"
 import { useNavigate } from "react-router"
 
+export type Team = {
+  id: string
+  name: string
+  description: string
+  createdAt: string
+  updatedAt: string
+  teamMembers: TeamMembers[]
+  tasks: Task[]
+}
+
+type Task = {
+  id: string
+  title: string
+  description: string
+  status: string
+  priority: string
+  assignedTo: string
+  teamId: string
+  createdAt: string
+  updatedAt: string
+}
+
+type TeamMembers = {
+  id: string
+  userId: string
+  teamId: string
+  createdAt: string
+  team: Team
+  user: Team
+}
+
 export function Teams() {
+  const [teams, setTeams] = useState<Team[]>([])
+
   const navigate = useNavigate()
 
   function handleClickNewTaskButton() {
     navigate("/new-team")
   }
+
+  async function fetchTeams() {
+    const { data } = await api.get<Team[]>("/teams")
+
+    setTeams(data)
+  }
+
+  useEffect(() => {
+    fetchTeams()
+  }, [])
 
   return (
     <>
@@ -33,30 +78,16 @@ export function Teams() {
         </Button>
       </div>
       <div className="mt-4 lg:mt-8 grid grid-cols-[repeat(auto-fit,minmax(18rem,1fr))] gap-4">
-        <TeamCard
-          teamName="Equipe de Desenvolvimento e suporte"
-          description="Team description, lorem is simply dummy text of the printing and typesetting industry. Lorem Ipsum"
-          numberOfMembers={5}
-          numberOfTasks={10}
-        />
-        <TeamCard
-          teamName="Equipe 2 Infraestrutura / Tech"
-          description="Team description, lorem is simply dummy text of the printing and typesetting industry. Lorem Ipsu"
-          numberOfMembers={3}
-          numberOfTasks={20}
-        />
-        <TeamCard
-          teamName="Equipe de Desenvolvimento e suporte"
-          description="Team description, lorem is simply dummy text of the printing and typesetting industry. Lorem Ipsum"
-          numberOfMembers={5}
-          numberOfTasks={10}
-        />
-        <TeamCard
-          teamName="Equipe 2 Infraestrutura / Tech"
-          description="Team description, lorem is simply dummy text of the printing and typesetting industry. Lorem Ipsu"
-          numberOfMembers={3}
-          numberOfTasks={20}
-        />
+        {teams.map((team) => (
+          <TeamCard
+            key={team.id}
+            teamId={team.id}
+            teamName={team.name}
+            description={team.description}
+            numberOfMembers={team.teamMembers.length}
+            numberOfTasks={team.tasks.length}
+          />
+        ))}
       </div>
     </>
   )

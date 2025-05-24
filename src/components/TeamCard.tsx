@@ -4,6 +4,7 @@ import * as Dialog from "@radix-ui/react-dialog"
 import { TeamModal } from "./TeamModal"
 
 type Props = React.ComponentProps<"button"> & {
+  teamId: string
   teamName: string
   description: string
   numberOfMembers: number
@@ -11,6 +12,7 @@ type Props = React.ComponentProps<"button"> & {
 }
 
 export function TeamCard({
+  teamId,
   teamName,
   description,
   numberOfMembers,
@@ -46,7 +48,7 @@ export function TeamCard({
           </footer>
         </button>
       </Dialog.Trigger>
-      <TeamModal />
+      <TeamModal teamId={teamId} />
     </Dialog.Root>
   )
 }
