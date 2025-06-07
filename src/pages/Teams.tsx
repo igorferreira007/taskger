@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import { GoPlus } from "react-icons/go"
 import { IoIosSearch } from "react-icons/io"
 import { useNavigate } from "react-router"
+import { Task } from "./Tasks"
 
 export type Team = {
   id: string
@@ -16,18 +17,6 @@ export type Team = {
   updatedAt: string
   teamMembers: TeamMembers[]
   tasks: Task[]
-}
-
-type Task = {
-  id: string
-  title: string
-  description: string
-  status: string
-  priority: string
-  assignedTo: string
-  teamId: string
-  createdAt: string
-  updatedAt: string
 }
 
 type TeamMembers = {

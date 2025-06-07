@@ -9,8 +9,34 @@ import { IoIosSearch } from "react-icons/io"
 
 import profilePicture from "@/assets/Igor.png"
 import { useNavigate } from "react-router"
+import { useEffect, useState } from "react"
+import { api } from "@/services/api"
+
+export type Task = {
+  id: string
+  title: string
+  description: string
+  status: "pending" | "inProgress" | "completed"
+  priority: "low" | "medium" | "high"
+  assignedTo: string | null
+  teamId: string
+  createdAt: string
+  updatedAt: string
+  user?: User
+  team: Team
+}
+
+type User = {
+  name: string
+}
+
+type Team = {
+  name: string
+}
 
 export function Tasks() {
+  const [tasks, setTasks] = useState<Task[]>()
+
   const navigate = useNavigate()
 
   function handleButtonOnClick() {
@@ -20,6 +46,16 @@ export function Tasks() {
   function handleCardOnClick(id: string) {
     navigate(`/task-details/${id}`)
   }
+
+  async function fetchTasks() {
+    const { data } = await api.get<Task[]>("/tasks")
+
+    setTasks(data)
+  }
+
+  useEffect(() => {
+    fetchTasks()
+  }, [])
 
   return (
     <>
@@ -63,20 +99,17 @@ export function Tasks() {
         </Select>
       </div>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(18rem,1fr))] gap-4 mt-4">
-        {Array(24)
-          .fill(null)
-          .map((_, index) => (
+        {tasks &&
+          tasks.map((task) => (
             <Card
-              key={index}
-              title="Formatar computadores da sala de reunião"
-              status="inProgress"
-              responsible="Arthur Silva Ferreira de Macedo Oliveiraaaaaaaaaaa"
-              team="Equipe 1 texto apenas para exceder o numero de linhas"
-              priority="low"
+              key={task.id}
+              title={task.title}
+              status={task.status}
+              responsible={task.user?.name ? task.user.name : "Sem responsável"}
+              team={task.team.name}
+              priority={task.priority}
               avatar={profilePicture}
-              onClick={() =>
-                handleCardOnClick("307a9dde-54f6-48b8-a5ee-6243882dd97c")
-              }
+              onClick={() => handleCardOnClick(task.id)}
             />
           ))}
       </div>

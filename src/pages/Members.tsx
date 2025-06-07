@@ -1,9 +1,42 @@
 import { Input } from "@/components/Input"
 import { MemberTableRow } from "@/components/MemberTableRow"
 import { PageTitle } from "@/components/PageTitle"
+import { api } from "@/services/api"
+import { useEffect, useState } from "react"
 import { IoIosSearch } from "react-icons/io"
 
+type TeamMember = {
+  id: string
+  userId: string
+  createdAt: string
+  team: Team
+  user: User
+}
+
+type User = {
+  name: string
+  email: string
+  role: string
+  createdAt: string
+}
+
+type Team = {
+  name: string
+}
+
 export function Members() {
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>()
+
+  async function fetchTeamMembers() {
+    const { data } = await api.get<TeamMember[]>("/team-members")
+
+    setTeamMembers(data)
+  }
+
+  useEffect(() => {
+    fetchTeamMembers()
+  }, [])
+
   return (
     <>
       <div className="grid grid-cols-2 grid-rows-2 items-center gap-4 lg:flex lg:justify-between">
@@ -36,18 +69,16 @@ export function Members() {
             </tr>
           </thead>
           <tbody>
-            {Array(16)
-              .fill(null)
-              .map((_, index) => (
-                <MemberTableRow
-                  key={index}
-                  name="Igor Ferreira de Macedo Oliveira dos Santos Neto"
-                  email="igorferreira.dev@email.com"
-                  role="member"
-                  team="development"
-                  startDate="16/02/2025"
-                />
-              ))}
+            {teamMembers?.map((teamMember) => (
+              <MemberTableRow
+                key={teamMember.id}
+                name={teamMember.user.name}
+                email={teamMember.user.email}
+                role={teamMember.user.role}
+                teamName={teamMember.team.name}
+                startDate={teamMember.createdAt}
+              />
+            ))}
           </tbody>
         </table>
       </div>
