@@ -36,6 +36,9 @@ type Team = {
 
 export function Tasks() {
   const [tasks, setTasks] = useState<Task[]>()
+  const [searchTask, setSearchTask] = useState("")
+  const [status, setStatus] = useState("")
+  const [priority, setPriority] = useState("")
 
   const navigate = useNavigate()
 
@@ -48,14 +51,23 @@ export function Tasks() {
   }
 
   async function fetchTasks() {
-    const { data } = await api.get<Task[]>("/tasks")
+    let url = "/tasks"
 
+    if (searchTask || status || priority) {
+      const params = new URLSearchParams()
+      if (searchTask) params.append("title", searchTask)
+      if (status) params.append("status", status)
+      if (priority) params.append("priority", priority)
+      url += `?${params.toString()}`
+    }
+
+    const { data } = await api.get<Task[]>(url)
     setTasks(data)
   }
 
   useEffect(() => {
     fetchTasks()
-  }, [])
+  }, [tasks])
 
   return (
     <>
@@ -65,6 +77,8 @@ export function Tasks() {
           placeholder="Pesquise uma tarefa"
           className="lg:max-w-180 w-full col-span-2"
           icon={IoIosSearch}
+          value={searchTask}
+          onChange={(e) => setSearchTask(e.target.value)}
         />
 
         <Button
@@ -81,8 +95,10 @@ export function Tasks() {
           label="Status:"
           selectSize="small"
           className="lg:flex-row lg:items-center"
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
         >
-          <option value="all">Todos</option>
+          <option value="">Todos</option>
           <option value="pending">Pendente</option>
           <option value="inProgress">Em progresso</option>
           <option value="completed">Concluído</option>
@@ -91,8 +107,10 @@ export function Tasks() {
           label="Prioridade:"
           selectSize="small"
           className="lg:flex-row lg:items-center"
+          value={priority}
+          onChange={(e) => setPriority(e.target.value)}
         >
-          <option value="all">Todos</option>
+          <option value="">Todos</option>
           <option value="low">Baixa</option>
           <option value="medium">Média</option>
           <option value="high">Alta</option>

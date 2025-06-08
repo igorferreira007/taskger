@@ -65,15 +65,6 @@ export function Card({
       <h3 className="font-semibold grow line-clamp-2" title={title}>
         {title}
       </h3>
-      {/* <div>
-        <span
-          className={twMerge(
-            "inline-block w-3 h-3 rounded-full",
-            variants.status[status].color
-          )}
-        />
-        <span className="text-sm ml-2">{variants.status[status].title}</span>
-      </div> */}
       <TaskStatus status={status} />
       <footer className="flex items-center gap-2 text-sm font-light">
         {avatar ? (

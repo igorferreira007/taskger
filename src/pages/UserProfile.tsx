@@ -37,11 +37,11 @@ export function UserProfile() {
           />
           <Input
             icon={PiPassword}
-            placeholder="Seu nome"
+            placeholder="Senha atual"
             type="password"
             className="mt-8"
           />
-          <Input icon={PiPassword} placeholder="Seu nome" type="password" />
+          <Input icon={PiPassword} placeholder="Nova senha" type="password" />
           <Button className="mt-8">Salvar</Button>
         </form>
       </main>
