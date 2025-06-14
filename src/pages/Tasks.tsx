@@ -26,6 +26,16 @@ export type Task = {
   team: Team
 }
 
+type TaskPaginationAPIResponse = {
+  tasks: Task[]
+  pagination: {
+    page: number
+    perPage: number
+    totalPages: number
+    totalRecords: number
+  }
+}
+
 type User = {
   name: string
 }
@@ -34,11 +44,15 @@ type Team = {
   name: string
 }
 
+const PER_PAGE = 20
+
 export function Tasks() {
   const [tasks, setTasks] = useState<Task[]>()
   const [searchTask, setSearchTask] = useState("")
   const [status, setStatus] = useState("")
   const [priority, setPriority] = useState("")
+  const [page, setPage] = useState(1)
+  const [totalPage, setTotalPage] = useState(0)
 
   const navigate = useNavigate()
 
@@ -53,16 +67,33 @@ export function Tasks() {
   async function fetchTasks() {
     let url = "/tasks"
 
-    if (searchTask || status || priority) {
+    if (searchTask || status || priority || page) {
       const params = new URLSearchParams()
       if (searchTask) params.append("title", searchTask)
       if (status) params.append("status", status)
       if (priority) params.append("priority", priority)
+      if (page) params.append("page", String(page))
+      if (PER_PAGE) params.append("perPage", String(PER_PAGE))
       url += `?${params.toString()}`
     }
 
-    const { data } = await api.get<Task[]>(url)
-    setTasks(data)
+    const { data } = await api.get<TaskPaginationAPIResponse>(url)
+    setTasks(data.tasks)
+    setTotalPage(data.pagination.totalPages)
+  }
+
+  function handlePagination(action: "next" | "previous") {
+    setPage((prevState) => {
+      if (action === "next" && prevState < totalPage) {
+        return prevState + 1
+      }
+
+      if (action === "previous" && prevState > 1) {
+        return prevState - 1
+      }
+
+      return prevState
+    })
   }
 
   useEffect(() => {
@@ -131,7 +162,12 @@ export function Tasks() {
             />
           ))}
       </div>
-      <Pagination />
+      <Pagination
+        current={page}
+        total={totalPage}
+        onNext={() => handlePagination("next")}
+        onPrevious={() => handlePagination("previous")}
+      />
     </>
   )
 }
