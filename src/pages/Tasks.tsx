@@ -64,24 +64,6 @@ export function Tasks() {
     navigate(`/task-details/${id}`)
   }
 
-  async function fetchTasks() {
-    let url = "/tasks"
-
-    if (searchTask || status || priority || page) {
-      const params = new URLSearchParams()
-      if (searchTask) params.append("title", searchTask)
-      if (status) params.append("status", status)
-      if (priority) params.append("priority", priority)
-      if (page) params.append("page", String(page))
-      if (PER_PAGE) params.append("perPage", String(PER_PAGE))
-      url += `?${params.toString()}`
-    }
-
-    const { data } = await api.get<TaskPaginationAPIResponse>(url)
-    setTasks(data.tasks)
-    setTotalPage(data.pagination.totalPages)
-  }
-
   function handlePagination(action: "next" | "previous") {
     setPage((prevState) => {
       if (action === "next" && prevState < totalPage) {
@@ -97,8 +79,26 @@ export function Tasks() {
   }
 
   useEffect(() => {
+    async function fetchTasks() {
+      let url = "/tasks"
+
+      if (searchTask || status || priority || page) {
+        const params = new URLSearchParams()
+        if (searchTask) params.append("title", searchTask)
+        if (status) params.append("status", status)
+        if (priority) params.append("priority", priority)
+        if (page) params.append("page", String(page))
+        if (PER_PAGE) params.append("perPage", String(PER_PAGE))
+        url += `?${params.toString()}`
+      }
+
+      const { data } = await api.get<TaskPaginationAPIResponse>(url)
+      setTasks(data.tasks)
+      setTotalPage(data.pagination.totalPages)
+    }
+
     fetchTasks()
-  }, [tasks])
+  }, [searchTask, status, priority, page])
 
   return (
     <>
