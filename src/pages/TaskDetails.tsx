@@ -45,7 +45,7 @@ export function TaskDetails() {
   const [task, setTask] = useState<Task>()
 
   const navigate = useNavigate()
-  const params = useParams()
+  const params = useParams<{ id: string }>()
 
   const [status, setStatus] = useState<"pending" | "inProgress" | "completed">(
     "pending"
@@ -99,7 +99,7 @@ export function TaskDetails() {
     }
 
     showTask()
-  }, [params.id])
+  }, [params.id, navigate])
 
   return (
     <>
@@ -177,9 +177,7 @@ export function TaskDetails() {
             </Button>
             <Button
               size="medium"
-              onClick={() =>
-                handleEditButtonClick("307a9dde-54f6-48b8-a5ee-6243882dd97c")
-              }
+              onClick={() => handleEditButtonClick(task.id)}
             >
               Editar
             </Button>
