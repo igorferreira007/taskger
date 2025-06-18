@@ -5,9 +5,10 @@ import { api } from "@/services/api"
 import { useEffect, useState } from "react"
 import { IoIosSearch } from "react-icons/io"
 
-type TeamMember = {
+export type TeamMember = {
   id: string
   userId: string
+  teamId: string
   createdAt: string
   team: Team
   user: User
