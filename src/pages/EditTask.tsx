@@ -5,14 +5,26 @@ import { PageTitle } from "@/components/PageTitle"
 import { Select } from "@/components/Select"
 import { TextArea } from "@/components/TextArea"
 import { api } from "@/services/api"
-import { useEffect, useState } from "react"
-import { useParams } from "react-router"
+import { FormEvent, useEffect, useState } from "react"
+import { useNavigate, useParams } from "react-router"
 import { Task } from "./Tasks"
 import { Team } from "./Teams"
 import { TeamMember } from "./Members"
+import { z, ZodError } from "zod"
+import { AxiosError } from "axios"
+
+const taskSchema = z.object({
+  title: z.string().trim().optional(),
+  description: z.string().trim().optional(),
+  priority: z.enum(["low", "medium", "high"]).optional(),
+  team_id: z.string().uuid().optional(),
+  assigned_to: z.string().uuid().nullable().optional(),
+})
 
 export function EditTask() {
   const params = useParams<{ id: string }>()
+
+  const navigate = useNavigate()
 
   const [task, setTask] = useState<Task>()
   const [title, setTitle] = useState("")
@@ -22,6 +34,36 @@ export function EditTask() {
   const [assignedTo, setAssignedTo] = useState<string>("")
   const [listTeams, setListTeams] = useState<Team[]>()
   const [listTeamMembers, setListTeamMembers] = useState<TeamMember[]>()
+
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault()
+
+    try {
+      const taskEdited = taskSchema.parse({
+        title,
+        priority,
+        team_id: team,
+        description,
+        assigned_to: assignedTo ? assignedTo : null,
+      })
+
+      await api.put(`/tasks/${task?.id}`, taskEdited)
+      alert("Editado com sucesso!")
+      navigate("/")
+    } catch (error) {
+      console.log(error)
+
+      if (error instanceof ZodError) {
+        return alert(error.issues[0].message)
+      }
+
+      if (error instanceof AxiosError) {
+        return alert(error.response?.data.message)
+      }
+
+      alert("Não foi possível cadastrar!")
+    }
+  }
 
   useEffect(() => {
     async function showTask() {
@@ -58,7 +100,7 @@ export function EditTask() {
       {task && (
         <form
           className="flex flex-col gap-6 lg:gap-8 mt-4 lg:mt-8"
-          onSubmit={(e: React.FormEvent) => e.preventDefault()}
+          onSubmit={onSubmit}
         >
           <div className="flex flex-col md:flex-row gap-4 justify-between">
             <PageTitle title="Editar tarefa" />
