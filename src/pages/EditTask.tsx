@@ -47,6 +47,12 @@ export function EditTask() {
         assigned_to: assignedTo ? assignedTo : null,
       })
 
+      const confirmEdit = confirm("Tem certeza que deseja editar a tarefa?")
+
+      if (!confirmEdit) {
+        return
+      }
+
       await api.put(`/tasks/${task?.id}`, taskEdited)
       alert("Editado com sucesso!")
       navigate("/")
