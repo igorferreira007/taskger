@@ -67,7 +67,7 @@ export function EditTask() {
         return alert(error.response?.data.message)
       }
 
-      alert("Não foi possível cadastrar!")
+      alert("Não foi possível editar!")
     }
   }
 

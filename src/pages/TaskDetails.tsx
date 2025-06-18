@@ -92,6 +92,33 @@ export function TaskDetails() {
     navigate(`/edit-task/${id}`)
   }
 
+  async function handleDeleteTask() {
+    try {
+      const confirmDeletion = confirm(
+        "Tem certeza que deseja excluir essa tarefa?"
+      )
+
+      if (!confirmDeletion) {
+        return
+      }
+
+      await api.delete(`/tasks/${task?.id}`)
+      navigate("/")
+    } catch (error) {
+      console.log(error)
+
+      if (error instanceof AxiosError) {
+        return alert(error.response?.data.message)
+      }
+
+      if (error instanceof ZodError) {
+        return alert(error.issues[0].message)
+      }
+
+      alert("Não foi possível excluir!")
+    }
+  }
+
   useEffect(() => {
     async function showTask() {
       const { data } = await api.get<Task>(`/tasks/${params.id}`)
@@ -176,7 +203,11 @@ export function TaskDetails() {
           <hr className="border-background-tertiary my-8" />
           {session?.user.role === "admin" && (
             <div className="flex flex-col md:flex-row md:justify-end gap-2 lg:gap-8">
-              <Button color="secondary" size="medium">
+              <Button
+                color="secondary"
+                size="medium"
+                onClick={handleDeleteTask}
+              >
                 Excluir tarefa
               </Button>
               <Button
