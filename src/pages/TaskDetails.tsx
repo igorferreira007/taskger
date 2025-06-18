@@ -3,12 +3,13 @@ import { ButtonText } from "@/components/ButtonText"
 import { PageTitle } from "@/components/PageTitle"
 import { Select } from "@/components/Select"
 import { api } from "@/services/api"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router"
 import { twMerge } from "tailwind-merge"
 import { Task } from "./Tasks"
 import { AxiosError } from "axios"
 import { ZodError } from "zod"
+import { useAuth } from "@/hooks/useAuth"
 
 const variants = {
   status: {
@@ -46,6 +47,8 @@ export function TaskDetails() {
 
   const navigate = useNavigate()
   const params = useParams<{ id: string }>()
+
+  const { session } = useAuth()
 
   const [status, setStatus] = useState<"pending" | "inProgress" | "completed">(
     "pending"
@@ -171,17 +174,19 @@ export function TaskDetails() {
             </li>
           </ul>
           <hr className="border-background-tertiary my-8" />
-          <div className="flex flex-col md:flex-row md:justify-end gap-2 lg:gap-8">
-            <Button color="secondary" size="medium">
-              Excluir tarefa
-            </Button>
-            <Button
-              size="medium"
-              onClick={() => handleEditButtonClick(task.id)}
-            >
-              Editar
-            </Button>
-          </div>
+          {session?.user.role === "admin" && (
+            <div className="flex flex-col md:flex-row md:justify-end gap-2 lg:gap-8">
+              <Button color="secondary" size="medium">
+                Excluir tarefa
+              </Button>
+              <Button
+                size="medium"
+                onClick={() => handleEditButtonClick(task.id)}
+              >
+                Editar
+              </Button>
+            </div>
+          )}
         </>
       )}
     </>

@@ -14,7 +14,7 @@ export function MemberRoutes() {
         <Route path="/" element={<AppLayout />}>
           <Route path="/" element={<Tasks />} />
           <Route path="/task-details/:id" element={<TaskDetails />} />
-          <Route path="/edit-task/:id" element={<EditTask />} />
+          {/* <Route path="/edit-task/:id" element={<EditTask />} /> */}
           <Route path="/task-history" element={<TaskHistory />} />
         </Route>
         <Route path="/profile" element={<UserProfile />} />
