@@ -27,16 +27,25 @@ type Team = {
 
 export function Members() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>()
-
-  async function fetchTeamMembers() {
-    const { data } = await api.get<TeamMember[]>("/team-members")
-
-    setTeamMembers(data)
-  }
+  const [searchMembers, setSearchMembers] = useState("")
 
   useEffect(() => {
+    async function fetchTeamMembers() {
+      let url = "/team-members"
+
+      if (searchMembers) {
+        const params = new URLSearchParams()
+
+        params.append("userName", searchMembers)
+        url += `?${params.toString()}`
+      }
+
+      const { data } = await api.get<TeamMember[]>(url)
+      setTeamMembers(data)
+    }
+
     fetchTeamMembers()
-  }, [])
+  }, [searchMembers])
 
   return (
     <>
@@ -46,6 +55,8 @@ export function Members() {
           placeholder="Pesquise um membro"
           className="lg:max-w-180 w-full col-span-2"
           icon={IoIosSearch}
+          value={searchMembers}
+          onChange={(e) => setSearchMembers(e.target.value)}
         />
       </div>
       <div className="mt-4 lg:mt-8 overflow-x-auto">
