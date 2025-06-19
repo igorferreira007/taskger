@@ -86,7 +86,9 @@ export function Teams() {
             teamName={team.name}
             description={team.description}
             numberOfMembers={team.teamMembers.length}
-            numberOfTasks={team.tasks.length}
+            numberOfTasks={
+              team.tasks.filter((task) => task.status !== "completed").length
+            }
           />
         ))}
       </div>
