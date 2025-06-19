@@ -4,7 +4,7 @@ type Props = {
   status: "pending" | "inProgress" | "completed"
 }
 
-const variants = {
+export const variantsTaskStatus = {
   status: {
     pending: {
       title: "Pendente",
@@ -27,10 +27,12 @@ export function TaskStatus({ status }: Props) {
       <span
         className={twMerge(
           "inline-block w-3 h-3 rounded-full",
-          variants.status[status].color
+          variantsTaskStatus.status[status].color
         )}
       />
-      <span className="text-sm ml-2">{variants.status[status].title}</span>
+      <span className="text-sm ml-2">
+        {variantsTaskStatus.status[status].title}
+      </span>
     </div>
   )
 }

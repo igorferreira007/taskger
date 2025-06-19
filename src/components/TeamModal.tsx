@@ -5,6 +5,7 @@ import { AccordionItem } from "./AccordionItem"
 import { useEffect, useState } from "react"
 import { api } from "@/services/api"
 import { Team } from "@/pages/Teams"
+import { TaskStatus, variantsTaskStatus } from "./TaskStatus"
 
 type Props = {
   teamId: string
@@ -21,7 +22,7 @@ export function TeamModal({ teamId }: Props) {
 
   useEffect(() => {
     showTeam(teamId)
-  }, [])
+  }, [teamId])
 
   return (
     <Dialog.Portal>
@@ -56,11 +57,20 @@ export function TeamModal({ teamId }: Props) {
             </AccordionItem>
 
             <AccordionItem accordionTitle="Tarefas" itemValue="item-2">
-              {team?.tasks.map((task) => (
-                <li key={task.id}>
-                  {task.id} - {task.title}
-                </li>
-              ))}
+              {team?.tasks
+                .slice()
+                .sort((a, b) => {
+                  const isACompleted = a.status === "completed"
+                  const isBCompleted = b.status === "completed"
+
+                  return Number(isACompleted) - Number(isBCompleted)
+                })
+                .map((task) => (
+                  <li key={task.id}>
+                    <TaskStatus status={task.status} />
+                    {task.id} - {task.title}
+                  </li>
+                ))}
             </AccordionItem>
           </Accordion.Root>
         </div>
