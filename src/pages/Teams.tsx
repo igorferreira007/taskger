@@ -31,21 +31,31 @@ type TeamMembers = {
 export function Teams() {
   const [teams, setTeams] = useState<Team[]>([])
 
+  const [searchTeam, setSearchTeam] = useState("")
+
   const navigate = useNavigate()
 
   function handleClickNewTaskButton() {
     navigate("/new-team")
   }
 
-  async function fetchTeams() {
-    const { data } = await api.get<Team[]>("/teams")
-
-    setTeams(data)
-  }
-
   useEffect(() => {
+    async function fetchTeams() {
+      let url = "/teams"
+
+      if (searchTeam) {
+        const params = new URLSearchParams()
+        params.append("name", searchTeam)
+        url += `?${params.toString()}`
+      }
+
+      const { data } = await api.get<Team[]>(url)
+
+      setTeams(data)
+    }
+
     fetchTeams()
-  }, [])
+  }, [searchTeam])
 
   return (
     <>
@@ -55,6 +65,8 @@ export function Teams() {
           placeholder="Pesquise uma equipe"
           className="lg:max-w-180 w-full col-span-2"
           icon={IoIosSearch}
+          value={searchTeam}
+          onChange={(e) => setSearchTeam(e.target.value)}
         />
 
         <Button
