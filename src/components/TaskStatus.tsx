@@ -4,7 +4,7 @@ type Props = {
   status: "pending" | "inProgress" | "completed"
 }
 
-export const variantsTaskStatus = {
+const variantsTaskStatus = {
   status: {
     pending: {
       title: "Pendente",

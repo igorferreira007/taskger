@@ -5,7 +5,7 @@ import { AccordionItem } from "./AccordionItem"
 import { useEffect, useState } from "react"
 import { api } from "@/services/api"
 import { Team } from "@/pages/Teams"
-import { TaskStatus, variantsTaskStatus } from "./TaskStatus"
+import { TaskStatus } from "./TaskStatus"
 
 type Props = {
   teamId: string
