@@ -84,6 +84,7 @@ export function Members() {
             {teamMembers?.map((teamMember) => (
               <MemberTableRow
                 key={teamMember.id}
+                id={teamMember.userId}
                 name={teamMember.user.name}
                 email={teamMember.user.email}
                 role={teamMember.user.role}
