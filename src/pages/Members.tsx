@@ -28,6 +28,11 @@ type Team = {
 export function Members() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>()
   const [searchMembers, setSearchMembers] = useState("")
+  const [reloadList, setReloadList] = useState(false)
+
+  function handleRefreshTeamMembers() {
+    setReloadList(true)
+  }
 
   useEffect(() => {
     async function fetchTeamMembers() {
@@ -45,7 +50,8 @@ export function Members() {
     }
 
     fetchTeamMembers()
-  }, [searchMembers])
+    setReloadList(false)
+  }, [searchMembers, reloadList])
 
   return (
     <>
@@ -84,12 +90,14 @@ export function Members() {
             {teamMembers?.map((teamMember) => (
               <MemberTableRow
                 key={teamMember.id}
-                id={teamMember.userId}
+                teamMemberId={teamMember.id}
+                userId={teamMember.userId}
                 name={teamMember.user.name}
                 email={teamMember.user.email}
                 role={teamMember.user.role}
-                teamName={teamMember.team.name}
+                teamId={teamMember.teamId}
                 startDate={teamMember.createdAt}
+                updateTeamMemberList={handleRefreshTeamMembers}
               />
             ))}
           </tbody>

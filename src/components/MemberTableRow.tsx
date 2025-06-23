@@ -6,25 +6,29 @@ import { AxiosError } from "axios"
 import { ZodError } from "zod"
 
 type Props = {
-  id: string
+  teamMemberId: string
+  userId: string
   name: string
   email: string
   role: string
-  teamName: string
+  teamId: string
   startDate: string
+  updateTeamMemberList: () => void
 }
 
 export function MemberTableRow({
-  id,
+  teamMemberId,
+  userId,
   name,
   email,
   role,
-  teamName,
+  teamId,
   startDate,
+  updateTeamMemberList,
 }: Props) {
   const [teams, setTeams] = useState<Team[]>()
-  const [selectedTeam, setSelectedTeam] = useState(teamName)
-  const [selectRole, setSelectRole] = useState(role)
+  const [selectedTeam, setSelectedTeam] = useState(teamId)
+  const [selectedRole, setSelectedRole] = useState(role)
 
   const formattedStartDate = new Date(startDate).toLocaleDateString("pt-BR")
 
@@ -46,9 +50,49 @@ export function MemberTableRow({
         return
       }
 
-      await api.patch(`/users/${id}/role`, { role: value })
-      setSelectRole(value)
+      await api.patch(`/users/${userId}/role`, { role: value })
+      setSelectedRole(value)
       alert("O cargo desse membro foi atualizado com sucesso!")
+    } catch (error) {
+      console.log(error)
+
+      if (error instanceof AxiosError) {
+        alert("AxiosError: \n" + error.response?.data.message)
+        return
+      }
+
+      if (error instanceof ZodError) {
+        alert("ZodError: \n" + error.issues[0].message)
+        return
+      }
+    }
+  }
+
+  async function handleChangeTeam(e: React.ChangeEvent<HTMLSelectElement>) {
+    try {
+      const value = e.target.value
+
+      const confirmChangeTeam = confirm(
+        "Tem certeza que deseja mover esse membro para outro time?"
+      )
+
+      if (!confirmChangeTeam) {
+        return
+      }
+
+      if (value === "remove") {
+        await api.delete(`/team-members/${teamMemberId}`)
+        setSelectedTeam(value)
+        alert("O membro foi removido da equipe.")
+        updateTeamMemberList()
+        return
+      }
+
+      await api.patch(`/team-members/${teamMemberId}/team-update`, {
+        teamId: value,
+      })
+      setSelectedTeam(value)
+      alert("O membro foi movido para outro time com sucesso!")
     } catch (error) {
       console.log(error)
 
@@ -77,7 +121,11 @@ export function MemberTableRow({
         {email}
       </td>
       <td className="first:rounded-l-lg last:rounded-r-lg first:pl-6 last:pr-6 px-2">
-        <Select selectSize="xs" value={selectRole} onChange={handleChangedRole}>
+        <Select
+          selectSize="xs"
+          value={selectedRole}
+          onChange={handleChangedRole}
+        >
           <option value="member">Membro</option>
           <option value="admin">Administrador</option>
         </Select>
@@ -86,10 +134,11 @@ export function MemberTableRow({
         <Select
           selectSize="xs"
           value={selectedTeam}
-          onChange={(e) => setSelectedTeam(e.target.value)}
+          onChange={handleChangeTeam}
         >
+          <option value="remove">Nenhuma</option>
           {teams?.map((team) => (
-            <option key={team.id} value={team.name}>
+            <option key={team.id} value={team.id}>
               {team.name}
             </option>
           ))}
