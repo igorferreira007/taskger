@@ -26,7 +26,7 @@ type Team = {
 }
 
 export function Members() {
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>()
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
   const [searchMembers, setSearchMembers] = useState("")
   const [reloadList, setReloadList] = useState(false)
 
@@ -87,7 +87,7 @@ export function Members() {
             </tr>
           </thead>
           <tbody>
-            {teamMembers?.map((teamMember) => (
+            {teamMembers.map((teamMember) => (
               <MemberTableRow
                 key={teamMember.id}
                 teamMemberId={teamMember.id}

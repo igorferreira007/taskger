@@ -26,7 +26,7 @@ export function MemberTableRow({
   startDate,
   updateTeamMemberList,
 }: Props) {
-  const [teams, setTeams] = useState<Team[]>()
+  const [teams, setTeams] = useState<Team[]>([])
   const [selectedTeam, setSelectedTeam] = useState(teamId)
   const [selectedRole, setSelectedRole] = useState(role)
 
@@ -137,7 +137,7 @@ export function MemberTableRow({
           onChange={handleChangeTeam}
         >
           <option value="remove">Nenhuma</option>
-          {teams?.map((team) => (
+          {teams.map((team) => (
             <option key={team.id} value={team.id}>
               {team.name}
             </option>
