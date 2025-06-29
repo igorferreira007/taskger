@@ -26,16 +26,37 @@ type User = {
 
 export function TaskHistory() {
   const [taskHistories, setTaskHistories] = useState<TaskHistory[]>()
-
-  async function fetchTaskHistories() {
-    const { data } = await api.get<TaskHistory[]>("/task-history")
-
-    setTaskHistories(data)
-  }
+  const [searchTaskHistory, setSearchTaskHistory] = useState("")
 
   useEffect(() => {
+    async function fetchTaskHistories() {
+      let url = "/task-history"
+
+      if (searchTaskHistory) {
+        const params = new URLSearchParams()
+
+        // Detecta se é um UUID v4 (ajuste se necessário)
+        const isUUID =
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+            searchTaskHistory
+          )
+
+        if (isUUID) {
+          params.append("taskId", searchTaskHistory)
+        } else {
+          params.append("title", searchTaskHistory)
+        }
+
+        url += `?${params.toString()}`
+      }
+
+      const { data } = await api.get<TaskHistory[]>(url)
+
+      setTaskHistories(data)
+    }
+
     fetchTaskHistories()
-  }, [])
+  }, [searchTaskHistory])
 
   return (
     <>
@@ -45,6 +66,8 @@ export function TaskHistory() {
           placeholder="Pesquise um log de tarefa"
           className="lg:max-w-180 w-full col-span-2"
           icon={IoIosSearch}
+          value={searchTaskHistory}
+          onChange={(e) => setSearchTaskHistory(e.target.value)}
         />
       </div>
       <div className="mt-4 lg:mt-8 overflow-x-auto">
