@@ -1,9 +1,12 @@
+import { Button } from "@/components/Button"
 import { Input } from "@/components/Input"
 import { MemberTableRow } from "@/components/MemberTableRow"
 import { PageTitle } from "@/components/PageTitle"
 import { api } from "@/services/api"
 import { useEffect, useState } from "react"
+import { GoPlus } from "react-icons/go"
 import { IoIosSearch } from "react-icons/io"
+import { useNavigate } from "react-router"
 
 export type TeamMember = {
   id: string
@@ -30,8 +33,14 @@ export function Members() {
   const [searchMembers, setSearchMembers] = useState("")
   const [reloadList, setReloadList] = useState(false)
 
+  const navigate = useNavigate()
+
   function handleRefreshTeamMembers() {
     setReloadList(true)
+  }
+
+  function handleClickNewMemberButton() {
+    navigate("/new-member")
   }
 
   useEffect(() => {
@@ -64,6 +73,15 @@ export function Members() {
           value={searchMembers}
           onChange={(e) => setSearchMembers(e.target.value)}
         />
+
+        <Button
+          size="small"
+          className="[@media(max-width:1023px)]:w-12 [@media(max-width:1023px)]:p-0 ml-auto lg:m-0 col-start-2 col-end-3 row-start-1 row-end-2"
+          onClick={handleClickNewMemberButton}
+        >
+          <GoPlus size={24} />
+          <span className="hidden lg:block">Novo membro</span>
+        </Button>
       </div>
       <div className="mt-4 lg:mt-8 overflow-x-auto">
         <table className="text-sm lg:text-base w-full min-w-270 border-separate border-spacing-y-2 text-nowrap">

@@ -10,6 +10,7 @@ import { TaskHistory } from "@/pages/TaskHistory"
 import { Route, Routes } from "react-router"
 import { UserProfile } from "@/pages/UserProfile"
 import { NotFound } from "@/pages/NotFound"
+import { NewMember } from "@/pages/NewMember"
 
 export function AdminRoutes() {
   return (
@@ -24,6 +25,7 @@ export function AdminRoutes() {
           <Route path="/new-team" element={<NewTeam />} />
           <Route path="/members" element={<Members />} />
           <Route path="/task-history" element={<TaskHistory />} />
+          <Route path="/new-member" element={<NewMember />} />
         </Route>
         <Route path="/profile" element={<UserProfile />} />
       </Route>
