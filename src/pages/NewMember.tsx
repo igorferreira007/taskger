@@ -108,10 +108,6 @@ export function NewMember() {
     fetchTeams()
   }, [])
 
-  useEffect(() => {
-    console.log(selectedUser)
-  }, [selectedUser])
-
   return (
     <>
       <ButtonText />

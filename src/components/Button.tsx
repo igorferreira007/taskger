@@ -31,7 +31,7 @@ export function Button({
     <button
       disabled={isLoading}
       className={twMerge(
-        "h-12 rounded-lg text-text-primary font-medium enabled:hover:brightness-90 transition flex items-center justify-center gap-2 text-nowrap text-sm disabled:opacity-50",
+        "h-12 rounded-lg text-text-primary font-medium enabled:hover:brightness-90 cursor-pointer transition flex items-center justify-center gap-2 text-nowrap text-sm disabled:opacity-50 disabled:cursor-not-allowed",
         variants.color[color],
         variants.size[size],
         isLoading && "cursor-progress!",

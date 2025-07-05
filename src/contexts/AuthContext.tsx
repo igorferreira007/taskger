@@ -1,12 +1,22 @@
 /* eslint-disable react-refresh/only-export-components */
 import { api } from "@/services/api"
+import { AxiosError } from "axios"
 import { createContext, ReactNode, useEffect, useState } from "react"
+import { ZodError } from "zod"
 
 type AuthContext = {
   isLoading: boolean
   session: null | UserAPIResponse
   save: (data: UserAPIResponse) => void
   remove: () => void
+  updateProfile: (user: UserUpdate) => void
+}
+
+type UserUpdate = {
+  name: string
+  email: string
+  password?: string
+  old_password?: string
 }
 
 const LOCAL_STORAGE_KEY = "@taskger"
@@ -35,6 +45,45 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     window.location.assign("/")
   }
 
+  async function updateProfile(user: UserUpdate) {
+    try {
+      await api.put(`/users/${session?.user.id}`, user)
+
+      localStorage.setItem(
+        "@taskger:user",
+        JSON.stringify({
+          name: user.name,
+          email: user.email,
+        })
+      )
+
+      setSession((prevState) => {
+        return {
+          user: {
+            ...prevState!.user,
+            name: user.name,
+            email: user.email,
+          },
+          token: prevState!.token,
+        }
+      })
+
+      alert("Perfil atualizado com sucesso!")
+    } catch (error) {
+      console.log(error)
+
+      if (error instanceof ZodError) {
+        return alert(error.issues[0].message)
+      }
+
+      if (error instanceof AxiosError) {
+        return alert(error.response?.data.message)
+      }
+
+      alert("Não foi possível atualizar!")
+    }
+  }
+
   function loadUser() {
     const user = localStorage.getItem(`${LOCAL_STORAGE_KEY}:user`)
     const token = localStorage.getItem(`${LOCAL_STORAGE_KEY}:token`)
@@ -56,7 +105,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ session, save, isLoading, remove }}>
+    <AuthContext.Provider
+      value={{ session, save, isLoading, remove, updateProfile }}
+    >
       {children}
     </AuthContext.Provider>
   )

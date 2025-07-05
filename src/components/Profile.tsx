@@ -20,7 +20,7 @@ export function Profile({ className }: Props) {
         </Link>
         <button
           title="Sair do Taskger"
-          className="text-sm text-text-tertiary"
+          className="text-sm text-text-tertiary cursor-pointer"
           onClick={() => remove()}
         >
           Sair
