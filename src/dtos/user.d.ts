@@ -6,6 +6,7 @@ type UserAPIResponse = {
     id: string
     name: string
     email: string
+    avatar?: string
     role: UserAPIRole
   }
 }

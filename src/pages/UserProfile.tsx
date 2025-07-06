@@ -1,13 +1,14 @@
 import { ButtonText } from "@/components/ButtonText"
 import { Input } from "@/components/Input"
 
-import profilePicture from "@/assets/Igor.png"
 import { PiUser } from "react-icons/pi"
 import { PiEnvelope } from "react-icons/pi"
 import { PiPassword } from "react-icons/pi"
 import { Button } from "@/components/Button"
 import { useAuth } from "@/hooks/useAuth"
 import { FormEvent, useMemo, useState } from "react"
+import { api } from "@/services/api"
+import { FaUser } from "react-icons/fa"
 
 export function UserProfile() {
   const { session, updateProfile } = useAuth()
@@ -19,6 +20,11 @@ export function UserProfile() {
   const [email, setEmail] = useState(session!.user.email)
   const [newPassword, setNewPassword] = useState("")
   const [oldPassword, setOldPassword] = useState("")
+
+  const avatarUrl = session?.user.avatar
+    ? `${api.defaults.baseURL}/uploads/${session.user.avatar}`
+    : ""
+  const [avatar, setAvatar] = useState(avatarUrl)
 
   const formChanged = useMemo(() => {
     return (
@@ -50,10 +56,14 @@ export function UserProfile() {
         </div>
       </header>
       <main className="w-full max-w-7xl mx-auto px-4">
-        <img
-          src={profilePicture}
-          className="w-16 h-16 lg:w-40 lg:h-40 object-cover rounded-full border border-background-tertiary mx-auto -mt-8 lg:-mt-20"
-        />
+        {avatar ? (
+          <img
+            src={avatar}
+            className="w-16 h-16 lg:w-40 lg:h-40 object-cover rounded-full border border-background-tertiary mx-auto -mt-8 lg:-mt-20"
+          />
+        ) : (
+          <FaUser className="w-16 h-16 lg:w-40 lg:h-40 object-cover rounded-full border border-background-tertiary mx-auto -mt-8 lg:-mt-20 bg-black text-text-primary" />
+        )}
         <form
           className="max-w-96 mx-auto space-y-2 mt-8 lg:mt-16"
           onSubmit={handleUpdate}
@@ -80,6 +90,8 @@ export function UserProfile() {
             onChange={(e) => setOldPassword(e.target.value)}
             type="password"
             className="mt-8"
+            minLength={6}
+            label="Alterar senha"
           />
           <Input
             icon={PiPassword}
@@ -87,6 +99,7 @@ export function UserProfile() {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             type="password"
+            minLength={6}
           />
           <Button className="mt-8" type="submit" disabled={!formChanged}>
             Salvar
