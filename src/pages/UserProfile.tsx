@@ -9,6 +9,15 @@ import { useAuth } from "@/hooks/useAuth"
 import { FormEvent, useMemo, useState } from "react"
 import { api } from "@/services/api"
 import { FaUser } from "react-icons/fa"
+import { FiCamera } from "react-icons/fi"
+
+type User = {
+  id: string
+  name: string
+  email: string
+  avatar?: string
+  role: UserAPIRole
+}
 
 export function UserProfile() {
   const { session, updateProfile } = useAuth()
@@ -25,6 +34,7 @@ export function UserProfile() {
     ? `${api.defaults.baseURL}/uploads/${session.user.avatar}`
     : ""
   const [avatar, setAvatar] = useState(avatarUrl)
+  const [avatarFile, setAvatarFile] = useState<File | null>(null)
 
   const formChanged = useMemo(() => {
     return (
@@ -48,6 +58,39 @@ export function UserProfile() {
     await updateProfile(user)
   }
 
+  async function handleChangeAvatar(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png"]
+
+    if (!allowedTypes.includes(file.type)) {
+      alert("Tipo de arquivo não permitido. Envie uma imagem .jpg ou .png.")
+      return
+    }
+
+    const confirmAvatarChange = confirm(
+      "Tem certeza que deseja alterar a foto?"
+    )
+
+    if (!confirmAvatarChange) {
+      return
+    }
+
+    const fileUploadForm = new FormData()
+    fileUploadForm.append("file", file)
+
+    const { data: user } = await api.patch<User>(
+      "/users/avatar",
+      fileUploadForm
+    )
+
+    const imagePreview = URL.createObjectURL(file)
+    setAvatar(imagePreview)
+
+    localStorage.setItem("@taskger:user", JSON.stringify(user))
+  }
+
   return (
     <div className="pb-16">
       <header className="bg-brand/20">
@@ -56,14 +99,30 @@ export function UserProfile() {
         </div>
       </header>
       <main className="w-full max-w-7xl mx-auto px-4">
-        {avatar ? (
-          <img
-            src={avatar}
-            className="w-16 h-16 lg:w-40 lg:h-40 object-cover rounded-full border border-background-tertiary mx-auto -mt-8 lg:-mt-20"
-          />
-        ) : (
-          <FaUser className="w-16 h-16 lg:w-40 lg:h-40 object-cover rounded-full border border-background-tertiary mx-auto -mt-8 lg:-mt-20 bg-black text-text-primary" />
-        )}
+        <div className="w-fit mx-auto relative">
+          {avatar ? (
+            <img
+              src={avatar}
+              className="w-16 h-16 lg:w-40 lg:h-40 object-cover rounded-full border border-background-tertiary mx-auto -mt-8 lg:-mt-20"
+            />
+          ) : (
+            <FaUser className="w-16 h-16 lg:w-40 lg:h-40 object-cover rounded-full border border-background-tertiary mx-auto -mt-8 lg:-mt-20 bg-black text-text-primary" />
+          )}
+          <label
+            htmlFor="avatar"
+            className="bg-brand w-12 h-12 grid place-content-center rounded-full absolute right-0 bottom-0 cursor-pointer"
+            title="Escolher arquivo"
+          >
+            <FiCamera className="w-5 text-text-secondary" />
+            <input
+              type="file"
+              id="avatar"
+              className="hidden"
+              accept="image/jpeg, image/jpg, image/png"
+              onChange={handleChangeAvatar}
+            />
+          </label>
+        </div>
         <form
           className="max-w-96 mx-auto space-y-2 mt-8 lg:mt-16"
           onSubmit={handleUpdate}
