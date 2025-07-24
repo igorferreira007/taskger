@@ -1,6 +1,7 @@
 import { FaUser } from "react-icons/fa"
 import { twMerge } from "tailwind-merge"
 import { TaskStatus } from "./TaskStatus"
+import { api } from "@/services/api"
 
 type Props = React.ComponentProps<"div"> & {
   title: string
@@ -54,6 +55,8 @@ export function Card({
   const [firstName, ...surname] = responsible.split(" ")
   const lastName = surname[surname.length - 1]
 
+  const avatarUrl = `${api.defaults.baseURL}/uploads/${avatar}`
+
   return (
     <div
       className={twMerge(
@@ -69,14 +72,14 @@ export function Card({
       <footer className="flex items-center gap-2 text-sm font-light">
         {avatar ? (
           <img
-            src={avatar}
+            src={avatarUrl}
             className="w-6 h-6 object-cover rounded-full border border-border-secondary"
           />
         ) : (
           <FaUser className="w-6 h-6 object-cover rounded-full border border-border-secondary" />
         )}
         <span className="line-clamp-1 grow" title={responsible}>
-          {`${firstName} ${lastName}`}
+          {`${firstName} ${lastName ?? ""}`}
         </span>
         <span className="text-nowrap" title={team}>
           {team.length > 10 ? `${team.slice(0, 15)}...` : team}

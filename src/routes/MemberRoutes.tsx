@@ -1,5 +1,4 @@
 import { AppLayout } from "@/components/layouts/AppLayout"
-import { EditTask } from "@/pages/EditTask"
 import { TaskDetails } from "@/pages/TaskDetails"
 import { Tasks } from "@/pages/Tasks"
 import { TaskHistory } from "@/pages/TaskHistory"

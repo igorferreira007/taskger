@@ -1,5 +1,6 @@
-import profilePicture from "@/assets/Igor.png"
 import { useAuth } from "@/hooks/useAuth"
+import { api } from "@/services/api"
+import { FaUser } from "react-icons/fa"
 import { Link } from "react-router"
 import { twMerge } from "tailwind-merge"
 
@@ -7,6 +8,10 @@ type Props = React.ComponentProps<"div">
 
 export function Profile({ className }: Props) {
   const { remove, session } = useAuth()
+
+  const avatarUrl = session?.user.avatar
+    ? `${api.defaults.baseURL}/uploads/${session.user.avatar}`
+    : ""
 
   return (
     <div className={twMerge("flex gap-2", className)}>
@@ -27,10 +32,14 @@ export function Profile({ className }: Props) {
         </button>
       </div>
       <Link to="/profile" title="Ir para a página de perfil">
-        <img
-          src={profilePicture}
-          className="w-16 h-16 object-cover rounded-full border border-background-tertiary"
-        />
+        {avatarUrl ? (
+          <img
+            src={avatarUrl}
+            className="w-16 h-16 object-cover rounded-full border border-background-tertiary"
+          />
+        ) : (
+          <FaUser className="w-16 h-16 object-cover rounded-full border border-background-tertiary bg-black text-text-primary" />
+        )}
       </Link>
     </div>
   )

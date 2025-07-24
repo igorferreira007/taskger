@@ -6,8 +6,6 @@ import { Pagination } from "@/components/Pagination"
 import { Select } from "@/components/Select"
 import { GoPlus } from "react-icons/go"
 import { IoIosSearch } from "react-icons/io"
-
-import profilePicture from "@/assets/Igor.png"
 import { useNavigate } from "react-router"
 import { useEffect, useState } from "react"
 import { api } from "@/services/api"
@@ -38,6 +36,7 @@ type TaskPaginationAPIResponse = {
 
 type User = {
   name: string
+  avatar: string
 }
 
 type Team = {
@@ -157,7 +156,7 @@ export function Tasks() {
               responsible={task.user?.name ? task.user.name : "Sem responsável"}
               team={task.team.name}
               priority={task.priority}
-              avatar={profilePicture}
+              avatar={task.user?.avatar}
               onClick={() => handleCardOnClick(task.id)}
             />
           ))}

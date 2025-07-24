@@ -34,7 +34,7 @@ export function UserProfile() {
     ? `${api.defaults.baseURL}/uploads/${session.user.avatar}`
     : ""
   const [avatar, setAvatar] = useState(avatarUrl)
-  const [avatarFile, setAvatarFile] = useState<File | null>(null)
+  // const [avatarFile, setAvatarFile] = useState<File | null>(null)
 
   const formChanged = useMemo(() => {
     return (
