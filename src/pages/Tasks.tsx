@@ -9,6 +9,7 @@ import { IoIosSearch } from "react-icons/io"
 import { useNavigate } from "react-router"
 import { useEffect, useState } from "react"
 import { api } from "@/services/api"
+import { useAuth } from "@/hooks/useAuth"
 
 export type Task = {
   id: string
@@ -46,6 +47,8 @@ type Team = {
 const PER_PAGE = 20
 
 export function Tasks() {
+  const { session } = useAuth()
+
   const [tasks, setTasks] = useState<Task[]>()
   const [searchTask, setSearchTask] = useState("")
   const [status, setStatus] = useState("")
@@ -111,14 +114,16 @@ export function Tasks() {
           onChange={(e) => setSearchTask(e.target.value)}
         />
 
-        <Button
-          size="small"
-          className="[@media(max-width:1023px)]:w-12 [@media(max-width:1023px)]:p-0 ml-auto lg:m-0 col-start-2 col-end-3 row-start-1 row-end-2"
-          onClick={handleButtonOnClick}
-        >
-          <GoPlus size={24} />
-          <span className="hidden lg:block">Nova tarefa</span>
-        </Button>
+        {session?.user.role === "admin" && (
+          <Button
+            size="small"
+            className="[@media(max-width:1023px)]:w-12 [@media(max-width:1023px)]:p-0 ml-auto lg:m-0 col-start-2 col-end-3 row-start-1 row-end-2"
+            onClick={handleButtonOnClick}
+          >
+            <GoPlus size={24} />
+            <span className="hidden lg:block">Nova tarefa</span>
+          </Button>
+        )}
       </div>
       <div className="flex gap-4 mt-4 lg:mt-8 max-w-full overflow-x-auto lg:overflow-visible lg:justify-end">
         <Select

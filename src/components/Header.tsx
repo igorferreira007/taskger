@@ -5,15 +5,26 @@ import { Sheet, SheetTrigger } from "./ui/sheet"
 import { Menu } from "./Menu"
 
 import { Profile } from "./Profile"
-
-const navLinks = [
-  { to: "/", label: "Tarefas" },
-  { to: "/teams", label: "Equipes" },
-  { to: "/members", label: "Membros" },
-  { to: "/task-history", label: "Histórico" },
-]
+import { useAuth } from "@/hooks/useAuth"
 
 export function Header() {
+  const { session } = useAuth()
+
+  const baseNavLinks = [
+    { to: "/", label: "Tarefas" },
+    { to: "/task-history", label: "Histórico" },
+  ]
+
+  const adminNavLinks = [
+    { to: "/teams", label: "Equipes" },
+    { to: "/members", label: "Membros" },
+  ]
+
+  const navLinks =
+    session?.user.role === "admin"
+      ? [...baseNavLinks, ...adminNavLinks]
+      : baseNavLinks
+
   return (
     <header className="bg-background-primary border-b border-background-tertiary sticky top-0 z-50">
       <div className="py-3 px-4 lg:py-5 max-w-7xl w-full mx-auto flex items-center justify-between">

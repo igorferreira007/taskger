@@ -8,8 +8,11 @@ import {
   SheetTitle,
 } from "./ui/sheet"
 import { Profile } from "./Profile"
+import { useAuth } from "@/hooks/useAuth"
 
 export function Menu() {
+  const { session } = useAuth()
+
   return (
     <SheetContent className="bg-background-primary border-none w-full data-[state=open]:duration-300">
       <SheetHeader className="border-b py-3 border-background-tertiary flex-row items-center justify-between">
@@ -27,16 +30,26 @@ export function Menu() {
         <a href="/" className="py-2.5 border-b border-background-tertiary">
           Tarefas
         </a>
-        <a href="/teams" className="py-2.5 border-b border-background-tertiary">
-          Equipes
-        </a>
+        {session?.user.role === "admin" && (
+          <a
+            href="/teams"
+            className="py-2.5 border-b border-background-tertiary"
+          >
+            Equipes
+          </a>
+        )}
+        {session?.user.role === "admin" && (
+          <a
+            href="/members"
+            className="py-2.5 border-b border-background-tertiary"
+          >
+            Membros
+          </a>
+        )}
         <a
-          href="/members"
+          href="/task-history"
           className="py-2.5 border-b border-background-tertiary"
         >
-          Membros
-        </a>
-        <a href="/logs" className="py-2.5 border-b border-background-tertiary">
           Histórico
         </a>
       </nav>
