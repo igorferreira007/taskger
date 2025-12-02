@@ -6,8 +6,8 @@ import { Route, Routes } from "react-router"
 export function AuthRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<SignIn />} />
-      <Route path="/sign-up" element={<SignUp />} />
+      {/* <Route path="/" element={<SignIn />} /> */}
+      <Route path="/" element={<SignUp />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
